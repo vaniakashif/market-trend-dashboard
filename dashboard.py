@@ -22,11 +22,25 @@ st.divider()
 def download_data(ticker, start, end):
     data = yf.download(ticker, start=start, end=end,
                       auto_adjust=True, progress=False)
+    
+    # handle MultiIndex columns
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = data.columns.droplevel(1)
-    df = data[['Close', 'Volume']].copy()
-    df['Close'] = df['Close'].squeeze()
-    df['Volume'] = df['Volume'].squeeze()
+    
+    # extract Close and Volume safely
+    close  = data['Close']
+    volume = data['Volume']
+    
+    # force to 1D Series
+    if isinstance(close, pd.DataFrame):
+        close = close.iloc[:, 0]
+    if isinstance(volume, pd.DataFrame):
+        volume = volume.iloc[:, 0]
+    
+    close  = pd.to_numeric(close,  errors='coerce')
+    volume = pd.to_numeric(volume, errors='coerce')
+    
+    df = pd.DataFrame({'Close': close, 'Volume': volume})
     df.dropna(inplace=True)
     return df
 
@@ -39,8 +53,7 @@ def add_indicators(df):
     df['Regime']       = df.apply(
         lambda r: 'Bull' if r['Close'] > r['MA200'] else 'Bear', axis=1
     )
-    close = df['Close'].squeeze()
-    df['Normalised'] = (close / close.iloc[0]) * 100
+    df['Normalised'] = (df['Close'] / df['Close'].values[0]) * 100
     return df
 
 def get_summary(df, portfolio_value=100_000):

@@ -6,7 +6,7 @@ An interactive web application for analysing financial asset trends. Built with 
 
 ## Live Demo
 
-> 🔗 [Link will be added after deployment]
+> 🔗https://market-trend-dashboard-app.streamlit.app/ 
 
 ---
 
@@ -18,18 +18,18 @@ An interactive web application for analysing financial asset trends. Built with 
 - 30-day rolling volatility chart
 - Bull vs bear market breakdown (pie chart)
 - Top 5 best and worst trading days
-- Summary metrics — total return, Sharpe ratio, avg/max volatility
+- Summary metrics total return, Sharpe ratio, avg/max volatility
 - Download full dataset as CSV
 
 **Compare Two Assets Mode**
 - Normalised price chart (both assets start at 100 for fair comparison)
-- Side by side summary metrics — total return, Sharpe ratio, volatility
+- Side by side summary metrics of total return, Sharpe ratio, volatility
 - Volatility comparison chart
 - Bull vs bear breakdown for both assets
 - Download CSV for both assets
 
 **Flexible Settings**
-- Any ticker supported — stocks, indices, commodities, crypto, ETFs
+- Any ticker supported(stocks, indices, commodities, crypto, ETFs)
 - Custom date range from 2000 to today
 - Toggle moving averages on/off
 
@@ -79,9 +79,9 @@ http://localhost:8501
 
 **Moving Averages**
 ```
-20-day  → short term trend (1 month)
-50-day  → medium term trend (2.5 months)
-200-day → long term bull/bear regime
+20 day  → short term trend (1 month)
+50 day  → medium term trend (2.5 months)
+200 day → long term bull/bear regime
 ```
 
 **Normalised Price**
@@ -126,16 +126,14 @@ Libraries  : pandas, numpy, scipy
 ---
 
 ## Project Structure
-
 ```
 market-trend-dashboard/
 │
 ├── dashboard.py        ← main application
 ├── requirements.txt    ← dependencies
+├── runtime.txt         ← Python version for deployment
 └── README.md
 ```
 
----
 
-> Built as a self-directed learning project in quantitative finance and data visualisation.
-> Completed with AI assistance (Claude by Anthropic) as a guided learning exercise.
+

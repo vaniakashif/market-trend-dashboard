@@ -25,6 +25,8 @@ def download_data(ticker, start, end):
     if isinstance(data.columns, pd.MultiIndex):
         data.columns = data.columns.droplevel(1)
     df = data[['Close', 'Volume']].copy()
+    df['Close'] = df['Close'].squeeze()
+    df['Volume'] = df['Volume'].squeeze()
     df.dropna(inplace=True)
     return df
 
@@ -37,7 +39,8 @@ def add_indicators(df):
     df['Regime']       = df.apply(
         lambda r: 'Bull' if r['Close'] > r['MA200'] else 'Bear', axis=1
     )
-    df['Normalised']   = (df['Close'] / df['Close'].iloc[0]) * 100
+    close = df['Close'].squeeze()
+    df['Normalised'] = (close / close.iloc[0]) * 100
     return df
 
 def get_summary(df, portfolio_value=100_000):
